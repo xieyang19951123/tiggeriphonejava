@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xy.tigger.shopvip.dao.RecordDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xy.tigger.shopvip.entity.RecordEntity" id="recordMap">
+        <result property="id" column="id"/>
+        <result property="uId" column="u_id"/>
+        <result property="message" column="message"/>
+        <result property="showStatus" column="show_status"/>
+        <result property="boosId" column="boos_id"/>
+    </resultMap>
+    <select id="selectAllStudent" resultType="com.xy.tigger.shopvip.entity.vo.ShopUserVip">
+    SELECT ps_shop_user.*  FROM ps_record LEFT JOIN ps_shop_user ON ps_shop_user.id = ps_record.`u_id`
+
+    WHERE ps_record.`show_status`=1 AND ps_record.`boos_id` = #{id}
+
+
+    </select>
+
+
+</mapper>

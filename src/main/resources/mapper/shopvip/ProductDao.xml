@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.tigger.shopvip.dao.ProductDao">
+
+    <select id="getProducts" resultType="com.xy.tigger.shopvip.entity.vo.CommentVo">
+        SELECT ps_comment.id,cid,ps_comment.`point`,fj_id,price,cover,a_src,cover_src,ps_comment.com_name
+        ,ps_comment.home_show,ps_comment.show_status
+        FROM ps_comment LEFT JOIN ps_accessory ON ps_comment.cover = ps_accessory.`id`
+
+        WHERE
+         ps_comment.`show_status` =1 AND `ps_accessory`.a_status =1
+         <if test="show!= null and  show!=''">
+             AND home_show =1
+         </if>
+
+        <if test="val!=null and val!=''">
+            and ps_comment.com_name like CONCAT('%',#{val},'%')
+        </if>
+
+    </select>
+
+    <select id="getFjsrc" resultType="java.lang.String">
+        SELECT cover_src FROM ps_accessory WHERE id IN ${id} AND show_status=1
+    </select>
+</mapper>

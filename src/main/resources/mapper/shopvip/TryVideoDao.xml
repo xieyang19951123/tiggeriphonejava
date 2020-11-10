@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.tigger.shopvip.dao.TryVideoDao">
+
+    <select id="getVideo" resultType="com.xy.tigger.shopvip.entity.vo.TryVideoVo">
+        SELECT cover_src,ps_try_video.`home_show`,ps_try_video.`id`,cid
+        ,ps_try_video.`introduce`,ps_try_video.`video_id`
+        FROM ps_try_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_try_video.`show_status` = 1 AND ps_accessory.`show_status` =1 and home_show = 1
+
+    </select>
+    
+    
+    <select id="getVideoRelevant" resultType="com.xy.tigger.shopvip.entity.vo.TryVideoVo">
+         SELECT a_src,cover_src,ps_try_video.`home_show`,ps_try_video.`id`,cid
+        ,ps_try_video.`introduce`,ps_try_video.`video_id`
+        FROM ps_try_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_try_video.`show_status` = 1 AND ps_accessory.`show_status` =1
+
+    </select>
+
+
+    <select id="getVideoAll" resultType="com.xy.tigger.shopvip.entity.vo.TryVideoVo">
+        SELECT a_src,cover_src,ps_try_video.`home_show`,ps_try_video.`id`,cid
+        ,ps_try_video.`introduce`,ps_try_video.`video_id`
+        FROM ps_try_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_try_video.`show_status` = 1 AND ps_accessory.`show_status` =1
+        <if test="val!=null and val !=''">
+            and ps_try_video.`introduce` like concat('%',#{val},'%')
+        </if>
+
+    </select>
+</mapper>

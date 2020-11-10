@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.tigger.shopvip.dao.CourseDao">
+
+    <select id="getCourseRecommend" resultType="com.xy.tigger.shopvip.entity.vo.CourseVo">
+
+        SELECT ps_course.*,ps_try_video.`video_name`,ps_organ.`username`,ps_accessory.`cover_src`,ps_accessory.`a_src` FROM ps_course LEFT JOIN ps_accessory ON ps_accessory.id = ps_course.image
+        LEFT JOIN ps_organ ON ps_organ.id = ps_course.`oid`
+        LEFT JOIN ps_try_video ON ps_try_video.id = ps_course.`tryvideo` WHERE ps_course.`show_status` =1
+    <if test="id!=null ">
+        and ps_course.id = #{id}
+    </if>
+        <if test="oid !=null ">
+            and ps_organ.id = #{oid}
+        </if>
+
+        <if test="val!=null ">
+            and ps_course.`course_name` like  concat('%',#{val},'%')
+
+        </if>
+    </select>
+</mapper>

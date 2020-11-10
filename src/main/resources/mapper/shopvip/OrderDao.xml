@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xy.tigger.shopvip.dao.OrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xy.tigger.shopvip.entity.OrderEntity" id="orderMap">
+        <result property="id" column="id"/>
+        <result property="oCode" column="o_code"/>
+        <result property="uId" column="u_id"/>
+        <result property="cId" column="c_id"/>
+        <result property="oMoney" column="o_money"/>
+        <result property="numbers" column="numbers"/>
+        <result property="uAddress" column="u_address"/>
+        <result property="payStatus" column="pay_status"/>
+        <result property="showStatus" column="show_status"/>
+    </resultMap>
+
+    <select id="selectOrder" resultType="com.xy.tigger.shopvip.entity.vo.OrderVo">
+        SELECT ps_pay_video.`introduce`,ps_order.`numbers`,ps_order.`o_code`,ps_order.`o_money`,ps_pay_video.price,ps_order.point  FROM ps_order
+        LEFT JOIN ps_pay_video ON ps_pay_video.id = ps_order.`c_id` WHERE ps_order.`pay_status` =2  AND ps_order.`u_id` =#{id}
+        <if test="ids!=null and ids!=''">
+
+            and ps_order.id in ${ids}
+        </if>
+        <if test="ids==null or ids==''">
+
+            AND pay_type !=2
+        </if>
+    </select>
+
+
+</mapper>

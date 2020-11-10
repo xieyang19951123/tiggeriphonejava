@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.tigger.shopvip.dao.OrganDao">
+
+    <select id="selectPayvideoByoid" resultType="com.xy.tigger.shopvip.entity.vo.PayVideoVo">
+          SELECT a_src,cover_src,ps_pay_video.`home_show`,ps_pay_video.`id`,ps_pay_video.`point`,ps_pay_video.cid,ps_organ.`username` AS organname
+        ,ps_pay_video.`introduce`,ps_pay_video.`price`,ps_pay_video.`video_id` FROM ps_pay_video
+        LEFT JOIN ps_organ ON ps_organ.id = ps_pay_video.oid
+        LEFT JOIN ps_accessory ON ps_accessory.id = ps_pay_video.`fj_id` WHERE ps_pay_video.`oid` = #{oid}
+        and ps_organ.show_status =1 and  ps_accessory.show_status =1 and ps_pay_video.show_status =1
+
+    </select>
+    <select id="selectOrganList" resultType="com.xy.tigger.shopvip.entity.vo.OragnVo">
+
+SELECT ps_organ.*,ps_accessory.`a_src` AS image ,ps_accessory.cover_src FROM ps_organ LEFT JOIN ps_accessory ON ps_accessory.id = ps_organ.`image_id`
+WHERE ps_organ.`show_status`=1
+<if test="oid!=null">
+
+    and ps_organ.id = #{oid}
+</if>
+
+        <if test="val!=null ">
+
+            and ps_organ.`username` like  concat('%',#{val},'%')
+        </if>
+
+
+    </select>
+</mapper>

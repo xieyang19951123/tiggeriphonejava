@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.tigger.shopvip.dao.ShoppingTrolleyDao">
+    <select id="selectShoppings" resultType="com.xy.tigger.shopvip.entity.vo.ShoppingTrolleyVo">
+
+        select product_id,ps_shopping_trolley.id,ps_comment.postage,com_name,`point`,ps_comment.price,total,a_src,cover_src
+        from ps_shopping_trolley
+        left join ps_comment on ps_comment.`id` = ps_shopping_trolley.`product_id`
+        left join ps_accessory on ps_accessory.id = ps_comment.`cover`
+        WHERE ps_comment.`show_status` =1 AND ps_accessory.`show_status` =1
+        and ps_shopping_trolley.`show_status`=1
+    </select>
+</mapper>

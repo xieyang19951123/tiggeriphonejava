@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xy.tigger.shopvip.dao.ShopUserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xy.tigger.shopvip.entity.ShopUserEntity" id="shopUserMap">
+        <result property="id" column="id"/>
+        <result property="psUsername" column="ps_username"/>
+        <result property="psPassword" column="ps_password"/>
+        <result property="point" column="point"/>
+        <result property="recommend" column="recommend"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="balance" column="balance"/>
+        <result property="createTime" column="create_time"/>
+        <result property="showStatus" column="show_status"/>
+        <result property="shopVip" column="shop_vip"/>
+    </resultMap>
+
+    <update id="updateStatus" >
+        update ps_shop_user set show_status = 1 and shop_vip =1 where id = #{id}
+    </update>
+
+
+    <select id="selectListVip" resultType="integer">
+        SELECT COUNT(1) FROM ps_shop_user WHERE shop_vip =1 AND show_status =1
+    </select>
+    <update id="updateOpenId" >
+        update ps_shop_user set open_id = #{openId} where id = #{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.tigger.shopvip.dao.PayVideoDao">
+
+
+    <select id="selectPayVideoVo" resultType="com.xy.tigger.shopvip.entity.vo.PayVideoVo">
+        SELECT a_src,cover_src,ps_pay_video.`home_show`,ps_pay_video.`id`,ps_pay_video.`point`,cid
+        ,ps_pay_video.`introduce`,ps_pay_video.`price`,ps_pay_video.`video_id`
+        FROM ps_pay_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_pay_video.`show_status` = 1 AND ps_accessory.`show_status` =1 and home_show =1
+    </select>
+
+    <select id="selectCategroy" resultType="java.lang.String">
+
+        select name from ps_category where id in ${cid}
+    </select>
+
+    <select id="selectPayVideoList" resultType="com.xy.tigger.shopvip.entity.vo.PayVideoVo">
+        SELECT a_src,cover_src,ps_pay_video.`home_show`,ps_pay_video.`id`,ps_pay_video.`point`,cid
+        ,ps_pay_video.`introduce`,ps_pay_video.`price`,ps_pay_video.`video_id`
+        FROM ps_pay_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_pay_video.`show_status` = 1 AND ps_accessory.`show_status` =1
+    </select>
+    <select id="selectPayVideomoduo" resultType="com.xy.tigger.shopvip.entity.vo.PayVideoVo">
+
+        SELECT a_src,cover_src,ps_pay_video.`home_show`,ps_pay_video.`id`,ps_pay_video.`point`,cid
+        ,ps_pay_video.`introduce`,ps_pay_video.`price`,ps_pay_video.`video_id`
+        FROM ps_pay_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_pay_video.`show_status` = 1 AND ps_accessory.`show_status` =1
+    </select>
+    <select id="selectPayvideoByVal" resultType="com.xy.tigger.shopvip.entity.vo.PayVideoVo">
+        SELECT a_src,cover_src,ps_pay_video.`home_show`,ps_pay_video.`id`,ps_pay_video.`point`,cid
+        ,ps_pay_video.`introduce`,ps_pay_video.`price`,ps_pay_video.`video_id`
+        FROM ps_pay_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_pay_video.`show_status` = 1 AND ps_accessory.`show_status` =1
+        <if test="val!=null and val!=''">
+            and ps_pay_video.`introduce` like  concat('%',#{val},'%')
+        </if>
+
+
+
+    </select>
+    <select id="getPayVideoByid" resultType="com.xy.tigger.shopvip.entity.vo.PayVideoVo">
+        SELECT a_src,cover_src,ps_pay_video.`home_show`,ps_pay_video.`id`,ps_pay_video.`point`,cid
+        ,ps_pay_video.`introduce`,ps_pay_video.`price`,ps_pay_video.`video_id`
+        FROM ps_pay_video  LEFT JOIN ps_accessory  ON fj_id = ps_accessory.id
+        WHERE ps_pay_video.`show_status` = 1 AND ps_accessory.`show_status` =1 and ps_pay_video.id= #{id}
+
+    </select>
+</mapper>
